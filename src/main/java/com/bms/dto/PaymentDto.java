@@ -19,8 +19,8 @@ import java.time.LocalDate;
 @ToString
 public class PaymentDto {
     private long id;
-    private Integer name;
+    private double amount;
     private PaymentStatus status;
     private String gateway;
-    private BookingDto bookingDto;
+    private BookingDto booking;
 }

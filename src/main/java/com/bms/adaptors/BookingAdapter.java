@@ -15,8 +15,8 @@ public class BookingAdapter {
 				.allottedSeats(bookingDto.getAllottedSeats())
 				.amount(bookingDto.getAmount())
 				.ticketDownloadlink(bookingDto.getTicketDownloadlink())
-				.showEntity(ShowAdapter.toEntity(bookingDto.getShowDto()))
-				.userEntity(UserAdapter.toEntity(bookingDto.getUserDto()))
+				.show(ShowAdapter.toEntity(bookingDto.getShow()))
+				.user(UserAdapter.toEntity(bookingDto.getUser()))
 				.build();
 
 	}
@@ -29,8 +29,8 @@ public class BookingAdapter {
 				.allottedSeats(bookingEntity.getAllottedSeats())
 				.amount(bookingEntity.getAmount())
 				.ticketDownloadlink(bookingEntity.getTicketDownloadlink())
-				.showDto(ShowAdapter.toDto(bookingEntity.getShowEntity()))
-				.userDto(UserAdapter.toDto(bookingEntity.getUserEntity()))
+				.show(ShowAdapter.toDto(bookingEntity.getShow()))
+				.user(UserAdapter.toDto(bookingEntity.getUser()))
 				.build();
 	}
 

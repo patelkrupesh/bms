@@ -26,6 +26,6 @@ public class BookingDto {
     private String allottedSeats;
     private double amount;
     private String ticketDownloadlink;
-    private ShowDto showDto;
-    private UserDto userDto;
+    private ShowDto show;
+    private UserDto user;
 }

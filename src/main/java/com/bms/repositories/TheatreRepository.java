@@ -13,10 +13,10 @@ public interface TheatreRepository extends CrudRepository<TheaterEntity, Long> {
     @Query("SELECT u FROM TheaterEntity u WHERE u.name=:name")
     Iterable<TheaterEntity> findTheaterEntitiesByName(@Param("name") String u);
 
-    @Query("SELECT u FROM UserEntity u WHERE u.username=:username")
+    @Query("SELECT u FROM TheaterEntity u WHERE u.username=:username")
     TheaterEntity findTheaterEntitiesByUsername(@Param("username") String u);
 
-    @Query("SELECT u FROM UserEntity u WHERE u.username=:username AND u.password=:password")
+    @Query("SELECT u FROM TheaterEntity u WHERE u.username=:username AND u.password=:password")
     TheaterEntity findTheaterEntitiesByCredentials(@Param("username") String username, @Param("password") String password);
 
     @Query("SELECT u FROM TheaterEntity u WHERE u.city=:city")

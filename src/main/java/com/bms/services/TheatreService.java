@@ -9,6 +9,7 @@ import com.bms.model.TheaterEntity;
 import com.bms.model.UserEntity;
 import com.bms.repositories.TheatreRepository;
 import com.bms.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Optional;
 @Service
 public class TheatreService {
 
-        //    @Autowired
+//        @Autowired
         private TheatreRepository theatreRepository;
 
         public TheatreDto theatreSignUp(TheatreDto theatreDto) throws Exception{

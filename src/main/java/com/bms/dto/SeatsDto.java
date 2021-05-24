@@ -18,11 +18,11 @@ import javax.persistence.*;
 @ToString
 public class SeatsDto {
     private long id;
-    private String seatNumber;
+    private int seatNumber;
     private int rate;
     private SeatCategory seatType;
     private boolean booked;
-    private ScreenDto screenDto;
-    private BookingDto bookingDto;
-    private ShowDto showDto;
+    private ShowDto show;
+    private BookingDto booking;
+//    private ShowDto show;
 }

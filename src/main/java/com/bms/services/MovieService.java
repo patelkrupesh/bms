@@ -14,12 +14,17 @@ import com.bms.model.TheaterEntity;
 import com.bms.model.UserEntity;
 import com.bms.repositories.MovieRepository;
 import com.bms.repositories.TheatreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieService {
 
-        //    @Autowired
+//        @Autowired
         private MovieRepository movieRepository;
 
         public MovieDto addMovie(MovieDto movieDto) throws Exception {
@@ -31,11 +36,11 @@ public class MovieService {
         }
 
         public MovieDto editMovie(MovieDto movieDto) throws Exception {
-                MovieEntity dbData = movieRepository.findOne(movieDto.getId());
-                if (dbData == null) {
+                Optional<MovieEntity> optionalDbData = movieRepository.findById(movieDto.getId());
+                if (!optionalDbData.isPresent()) {
                         throw new Exception("Could not find the movie with id : " + movieDto.getId());
                 }
-                dbData = movieRepository.save(MovieAdapter.toEntity(movieDto));
+                MovieEntity dbData = movieRepository.save(MovieAdapter.toEntity(movieDto));
                 if (dbData == null) {
                         throw new Exception("Could not edit movie data : " + movieDto.getId() + ", name : " +
                                 movieDto.getName());
@@ -43,4 +48,10 @@ public class MovieService {
                 return MovieAdapter.toDto(dbData);
         }
 
+        public List<MovieDto> getMovieList(){
+                List<MovieDto> result = new ArrayList<>();
+                Iterable<MovieEntity> dbData = movieRepository.findAll();
+                dbData.forEach(movie -> result.add(MovieAdapter.toDto(movie)));
+                return result;
+        }
 }

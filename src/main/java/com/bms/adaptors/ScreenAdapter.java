@@ -13,7 +13,7 @@ public class ScreenAdapter {
 				.id(screenDto.getId())
 				.screenname(screenDto.getScreenname())
 				.noOfSeats(screenDto.getNoOfSeats())
-				.theaterEntity(TheatreAdapter.toEntity(screenDto.getTheatreDto()))
+				.theater(TheatreAdapter.toEntity(screenDto.getTheatre()))
 				.build();
 
 	}
@@ -24,7 +24,7 @@ public class ScreenAdapter {
 				.id(screenEntity.getId())
 				.screenname(screenEntity.getScreenname())
 				.noOfSeats(screenEntity.getNoOfSeats())
-				.theatreDto(TheatreAdapter.toDto(screenEntity.getTheaterEntity()))
+				.theatre(TheatreAdapter.toDto(screenEntity.getTheater()))
 				.build();
 	}
 

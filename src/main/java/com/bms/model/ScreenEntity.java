@@ -27,18 +27,9 @@ public class ScreenEntity {
 	@Column(name = "noofseats", nullable = false)
 	private String noOfSeats;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "theatre_id")
 	@JsonIgnore
-	private TheaterEntity theaterEntity;
+	private TheaterEntity theater;
 
-//	@OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
-//	@JsonIgnore
-//	@Builder.Default
-//	private List<ShowEntity> shows = new ArrayList<>();
-//
-//	@OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
-//	@JsonIgnore
-//	@Builder.Default
-//	private List<TheaterSeatsEntity> seats = new ArrayList<>();
 }

@@ -25,7 +25,7 @@ public class PaymentEntity {
 	private long id;
 
 	@Column(name = "amount", nullable = false)
-	private Integer name;
+	private double amount;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = true)
@@ -34,13 +34,9 @@ public class PaymentEntity {
 	@Column(name = "gateway", nullable = false)
 	private String gateway;
 
-//	@ManyToOne
-//	@JoinColumn(name = "username")
-//	private UserEntity user;
-
 	@ManyToOne
 	@JoinColumn(name = "booking_id")
 	@JsonIgnore
-	private BookingEntity bookingEntity;
+	private BookingEntity booking;
 
 }

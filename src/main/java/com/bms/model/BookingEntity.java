@@ -35,24 +35,16 @@ public class BookingEntity {
 	@Column(name = "amount", nullable = false)
 	private double amount;
 
-//	@OneToMany(mappedBy = "seats", cascade = CascadeType.ALL)
-//	@JsonIgnore
-//	private List<SeatsEntity> seats;
-
-//	@OneToMany(mappedBy = "payments")
-//	@JsonIgnore
-//	private List<PaymentEntity> paymentEntities;
-
 	@Column(name = "ticketDownloadlink", nullable = false)
 	private String ticketDownloadlink;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "show_id")
 	@JsonIgnore
-	private ShowEntity showEntity;
+	private ShowEntity show;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "username")
 	@JsonIgnore
-	private UserEntity userEntity;
+	private UserEntity user;
 }

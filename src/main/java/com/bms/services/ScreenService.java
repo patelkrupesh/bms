@@ -9,15 +9,17 @@ import com.bms.model.ScreenEntity;
 import com.bms.model.TheaterEntity;
 import com.bms.repositories.ScreenRepository;
 import com.bms.repositories.TheatreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ScreenService {
 
-    //@Autowired
+//    @Autowired
     private ScreenRepository screenRepository;
 
     public ScreenDto addScreen(ScreenDto screenDto) throws Exception {
@@ -29,11 +31,11 @@ public class ScreenService {
     }
 
     public ScreenDto editScreen(ScreenDto screenDto) throws Exception {
-        ScreenEntity dbData = screenRepository.findOne(screenDto.getId());
-        if (dbData == null) {
+        Optional<ScreenEntity> optionalDbData = screenRepository.findById(screenDto.getId());
+        if (!optionalDbData.isPresent()) {
             throw new Exception("Could not find the screen with id : " + screenDto.getId());
         }
-        dbData = screenRepository.save(ScreenAdapter.toEntity(screenDto));
+        ScreenEntity dbData = screenRepository.save(ScreenAdapter.toEntity(screenDto));
         if (dbData == null) {
             throw new Exception("Could not edit screen data : " + screenDto.getId());
         }

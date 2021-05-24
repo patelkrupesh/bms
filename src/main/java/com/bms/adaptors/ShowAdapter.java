@@ -1,6 +1,7 @@
 package com.bms.adaptors;
 
 import com.bms.dto.ShowDto;
+import com.bms.dto.ShowInputDto;
 import com.bms.model.MovieEntity;
 import com.bms.model.ShowEntity;
 import lombok.experimental.UtilityClass;
@@ -14,8 +15,8 @@ public class ShowAdapter {
 				.id(showDto.getId())
 				.date(showDto.getDate())
 				.time(showDto.getTime())
-				.screenEntity(ScreenAdapter.toEntity(showDto.getScreenDto()))
-				.movieEntity(MovieAdapter.toEntity(showDto.getMovieDto()))
+				.screen(ScreenAdapter.toEntity(showDto.getScreen()))
+				.movie(MovieAdapter.toEntity(showDto.getMovie()))
 				.build();
 
 	}
@@ -26,8 +27,18 @@ public class ShowAdapter {
 				.id(showEntity.getId())
 				.date(showEntity.getDate())
 				.time(showEntity.getTime())
-				.screenDto(ScreenAdapter.toDto(showEntity.getScreenEntity()))
-				.movieDto(MovieAdapter.toDto(showEntity.getMovieEntity()))
+				.screen(ScreenAdapter.toDto(showEntity.getScreen()))
+				.movie(MovieAdapter.toDto(showEntity.getMovie()))
+				.build();
+	}
+
+	public static ShowDto getShowDtoFromInputDto(ShowInputDto showInputDto){
+		return ShowDto.builder()
+				.id(showInputDto.getId())
+				.date(showInputDto.getDate())
+				.time(showInputDto.getTime())
+				.screen(showInputDto.getScreen())
+				.movie(showInputDto.getMovie())
 				.build();
 	}
 

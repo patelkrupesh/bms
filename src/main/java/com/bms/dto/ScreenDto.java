@@ -19,5 +19,5 @@ public class ScreenDto {
     private long id;
     private String screenname;
     private String noOfSeats;
-    private TheatreDto theatreDto;
+    private TheatreDto theatre;
 }

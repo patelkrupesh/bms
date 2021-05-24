@@ -22,31 +22,31 @@ public class SeatsEntity {
 	@Column(name="seat_id")
 	private long id;
 
-	@Column(name = "seat_number", nullable = false)
-	private String seatNumber;
+	@Column(name = "seatnumber", nullable = false)
+	private int seatNumber;
 
 	@Column(name = "rate", nullable = false)
 	private int rate;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "seat_type", nullable = false)
+	@Column(name = "seattype", nullable = false)
 	private SeatCategory seatType;
 
 	@Column(name = "is_booked", columnDefinition = "bit(1) default 0", nullable = false)
 	private boolean booked;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "show_id")
 	@JsonIgnore
-	private ScreenEntity screenEntity;
+	private ScreenEntity screen;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "show_id")
 	@JsonIgnore
-	private ShowEntity showEntity;
+	private ShowEntity show;
 
 	@ManyToOne
 	@JoinColumn(name = "booking_id")
 	@JsonIgnore
-	private BookingEntity bookingEntity;
+	private BookingEntity booking;
 }

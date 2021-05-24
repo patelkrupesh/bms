@@ -11,10 +11,10 @@ public class PaymentAdapter {
 
 		return PaymentEntity.builder()
 				.id(paymentDto.getId())
-				.name(paymentDto.getName())
+				.amount(paymentDto.getAmount())
 				.status(paymentDto.getStatus())
 				.gateway(paymentDto.getGateway())
-				.bookingEntity(BookingAdapter.toEntity(paymentDto.getBookingDto()))
+				.booking(BookingAdapter.toEntity(paymentDto.getBooking()))
 				.build();
 
 	}
@@ -23,10 +23,10 @@ public class PaymentAdapter {
 
 		return PaymentDto.builder()
 				.id(paymentEntity.getId())
-				.name(paymentEntity.getName())
+				.amount(paymentEntity.getAmount())
 				.status(paymentEntity.getStatus())
 				.gateway(paymentEntity.getGateway())
-				.bookingDto(BookingAdapter.toDto(paymentEntity.getBookingEntity()))
+				.booking(BookingAdapter.toDto(paymentEntity.getBooking()))
 				.build();
 	}
 

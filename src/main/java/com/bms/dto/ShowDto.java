@@ -21,6 +21,6 @@ public class ShowDto {
     private long id;
     private LocalDate date;
     private int time;
-    private ScreenDto screenDto;
-    private MovieDto movieDto;
+    private ScreenDto screen;
+    private MovieDto movie;
 }

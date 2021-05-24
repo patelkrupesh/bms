@@ -28,17 +28,17 @@ public class ShowEntity {
 	@Column(name = "show_time", nullable = false)
 	private int time;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "movie_id")
 	@JsonIgnore
-	private MovieEntity movieEntity;
+	private MovieEntity movie;
 
 //	@OneToMany(mappedBy = "seats")
 //	@JsonIgnore
 //	private List<SeatsEntity> seats;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "screen_id")
 	@JsonIgnore
-	private ScreenEntity screenEntity;
+	private ScreenEntity screen;
 }
