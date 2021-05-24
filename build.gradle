@@ -1,0 +1,47 @@
+
+plugins {
+	id 'org.springframework.boot' version '2.4.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// tag::actuator[]
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	// end::actuator[]
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// tag::tests[]
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	// end::tests[]'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.3'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.10.3'
+	implementation 'io.vertx:vertx-core:3.5.3'
+
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.20'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+	implementation group: 'javax.transaction', name: 'javax.transaction-api', version: '1.2'
+	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+	// https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
+	implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '1.0.0.RELEASE'
+
+}
+
+test {
+	useJUnitPlatform()
+}
