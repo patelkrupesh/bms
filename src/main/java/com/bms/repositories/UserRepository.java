@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends CrudRepository<UserEntity, String> {
 
     @Query("SELECT u FROM UserEntity u WHERE u.username=:username")
-    UserEntity findUserByUsername(@Param("username") String u);
+    UserEntity findUserByUsername(@Param("username") String username);
 
     @Query("SELECT u FROM UserEntity u WHERE u.username=:username AND u.password=:password")
     UserEntity findUserByCredentials(@Param("username") String username, @Param("password") String password);

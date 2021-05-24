@@ -15,6 +15,7 @@ public class BookingAdapter {
 				.allottedSeats(bookingDto.getAllottedSeats())
 				.amount(bookingDto.getAmount())
 				.ticketDownloadlink(bookingDto.getTicketDownloadlink())
+				.status(bookingDto.getStatus())
 				.show(ShowAdapter.toEntity(bookingDto.getShow()))
 				.user(UserAdapter.toEntity(bookingDto.getUser()))
 				.build();
@@ -29,6 +30,7 @@ public class BookingAdapter {
 				.allottedSeats(bookingEntity.getAllottedSeats())
 				.amount(bookingEntity.getAmount())
 				.ticketDownloadlink(bookingEntity.getTicketDownloadlink())
+				.status(bookingEntity.getStatus())
 				.show(ShowAdapter.toDto(bookingEntity.getShow()))
 				.user(UserAdapter.toDto(bookingEntity.getUser()))
 				.build();

@@ -76,6 +76,7 @@ CREATE TABLE `seats` (
                          `screen_id` bigint(20) DEFAULT NULL ,
                          `show_id` bigint(20) DEFAULT NULL,
                          `movie_id` bigint(20) DEFAULT NULL,
+                         `booking_id` bigint(20) DEFAULT NULL,
                          PRIMARY KEY (`id`),
                          FOREIGN KEY (`screen_id`) REFERENCES `screen` (`id`)
                              ON UPDATE CASCADE ON DELETE CASCADE,

@@ -2,6 +2,7 @@ package com.bms.controllers;
 
 import com.bms.dto.BookTicketInputDto;
 import com.bms.dto.BookingDto;
+import com.bms.dto.PaymentDto;
 import com.bms.dto.TheatreDto;
 import com.bms.services.BookingService;
 import com.bms.services.TheatreService;
@@ -21,8 +22,8 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping("bookTicket")
-    public ResponseEntity<BookingDto> bookTicket(@RequestBody BookTicketInputDto bookTicketInputDto) {
-        BookingDto savedDto = null;
+    public ResponseEntity<PaymentDto> bookTicket(@RequestBody BookTicketInputDto bookTicketInputDto) {
+        PaymentDto savedDto = null;
         try{
             savedDto = bookingService.bookTicket(bookTicketInputDto);
         }catch (Exception e) {

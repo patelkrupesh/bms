@@ -1,5 +1,6 @@
 package com.bms.model;
 
+import com.bms.enums.BookingStatus;
 import com.bms.enums.Language;
 import com.bms.enums.MovieGenre;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,6 +38,10 @@ public class BookingEntity {
 
 	@Column(name = "ticketDownloadlink", nullable = false)
 	private String ticketDownloadlink;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status", nullable = true)
+	private BookingStatus status;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "show_id")

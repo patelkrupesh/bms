@@ -12,6 +12,9 @@ public interface SeatsRepository extends CrudRepository<SeatsEntity, Long>{
     @Query("SELECT m FROM SeatsEntity m WHERE m.show=:show")
     Iterable<SeatsEntity> findSeatsByShow(@Param("show") Long show);
 
+    @Query("SELECT m FROM SeatsEntity m WHERE m.booking.id=:bookingid")
+    Iterable<SeatsEntity> findSeatsByBooking(@Param("bookingid") Long bookingid);
+
     @Override
     Iterable<SeatsEntity> findAllById(Iterable<Long> longs);
 }

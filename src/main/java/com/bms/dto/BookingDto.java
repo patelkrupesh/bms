@@ -1,5 +1,6 @@
 package com.bms.dto;
 
+import com.bms.enums.BookingStatus;
 import com.bms.enums.Language;
 import com.bms.enums.MovieGenre;
 import com.bms.model.PaymentEntity;
@@ -26,6 +27,7 @@ public class BookingDto {
     private String allottedSeats;
     private double amount;
     private String ticketDownloadlink;
+    private BookingStatus status;
     private ShowDto show;
     private UserDto user;
 }

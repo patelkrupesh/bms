@@ -23,4 +23,8 @@ public class PaymentDto {
     private PaymentStatus status;
     private String gateway;
     private BookingDto booking;
+
+    public PaymentDto(PaymentDto paymentDto) {
+        this(paymentDto.id, paymentDto.amount, paymentDto.status, paymentDto.gateway, paymentDto.getBooking());
+    }
 }

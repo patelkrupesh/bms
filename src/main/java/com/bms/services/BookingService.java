@@ -4,20 +4,31 @@ import com.bms.adaptors.BookingAdapter;
 import com.bms.dto.BookTicketInputDto;
 import com.bms.dto.BookingDto;
 import com.bms.dto.BookingEntities;
+import com.bms.dto.PaymentDto;
+import com.bms.enums.BookingStatus;
+import com.bms.enums.PaymentStatus;
 import com.bms.enums.UserType;
 import com.bms.model.*;
 import com.bms.repositories.*;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.apache.commons.lang3.StringUtils;
+import springfox.documentation.spring.web.PropertySourcedMapping;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class BookingService {
+    final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
 
 //        @Autowired
         private BookingRepository bookingRepository;
@@ -27,13 +38,65 @@ public class BookingService {
         private UserRepository userRepository;
 //        @Autowired
         private SeatsRepository seatsRepository;
+//        @Autowired
+        private PaymentService paymentService;
+//        @Autowired
+        private BookingExpiryRepository bookingExpiryRepository;
+        @Value( "${payment.gateway.default:STRIPE}")
+        private String paymentGateway;
+        @Value( "${payment.timeout:10}")
+        private int paymentTimeoutInterval;
 
 
-        public BookingDto bookTicket(BookTicketInputDto bookTicketInput) throws Exception{
+        public PaymentDto bookTicket(BookTicketInputDto bookTicketInput) throws Exception{
             BookingEntities entitiesToSave = validateAndGetEntitiesToSave(bookTicketInput);
-            BookingDto bookingDto = syncBookTicket(bookTicketInput, entitiesToSave);
-            return bookingDto;
+            PaymentDto paymentDto = syncBookTicket(bookTicketInput, entitiesToSave);
+            //startAsyncPayment(paymentDto);
+            return paymentDto;
         }
+
+    // ## CASE : immediate responce from payment
+    // ## description : UI will handle the payment part (entering card details, otp etc)
+    //                  and after that based on payment status it will call updateBooking
+
+    // note : payment status field will be already set as per outcome.
+
+    public BookingDto updateBooking(PaymentDto paymentDto){
+            BookingDto result = null;
+            if(paymentDto.getStatus().equals(PaymentStatus.SUCCESSFUL)){
+                result = updateBookingOnPaymentSuccess(paymentDto);
+            }else if(paymentDto.getStatus().equals(PaymentStatus.FAILED)){
+                result = rollbackBookingOnPaymentFailure(paymentDto);
+            }
+            return result;
+    }
+
+    @Transactional
+    public BookingDto updateBookingOnPaymentSuccess(PaymentDto paymentDto){
+        BookingEntity bookingEntity = BookingAdapter.toEntity(paymentDto.getBooking());
+        bookingEntity.setStatus(BookingStatus.SUCCESSFUL);
+        bookingEntity = bookingRepository.save(bookingEntity);
+        Iterable<BookingExpiryEntity> bookingExpiryEntities =  bookingExpiryRepository.findBookingExpiryEntitiesByBooking(bookingEntity.getId());
+        bookingExpiryRepository.deleteAll(bookingExpiryEntities);
+        return BookingAdapter.toDto(bookingEntity);
+    }
+
+    @Transactional
+    public BookingDto rollbackBookingOnPaymentFailure(PaymentDto paymentDto){
+        BookingEntity bookingEntity = BookingAdapter.toEntity(paymentDto.getBooking());
+        bookingEntity.setStatus(BookingStatus.FAILED);
+        bookingEntity = bookingRepository.save(bookingEntity);
+
+        Iterable<SeatsEntity> seatsEntities = seatsRepository.findSeatsByBooking(paymentDto.getBooking().getId());
+        seatsEntities.forEach(seatsEntity -> {
+            seatsEntity.setBooked(false);
+            seatsEntity.setBooking(null);
+        });
+        seatsRepository.saveAll(seatsEntities);
+        Iterable<BookingExpiryEntity> bookingExpiryEntities =  bookingExpiryRepository.findBookingExpiryEntitiesByBooking(bookingEntity.getId());
+        bookingExpiryRepository.deleteAll(bookingExpiryEntities);
+        return BookingAdapter.toDto(bookingEntity);
+    }
 
     private BookingEntities validateAndGetEntitiesToSave(BookTicketInputDto bookTicketInput) throws Exception{
             BookingEntities result = new BookingEntities();
@@ -67,6 +130,7 @@ public class BookingService {
                     .allottedSeats(StringUtils.join(seatsEntities, ","))
                     .amount(amount)
                     .show(optionalShowEntity.get())
+                    .status(BookingStatus.IN_PROGRESS)
                     .user(userEntity)
                     .build();
 
@@ -76,7 +140,7 @@ public class BookingService {
         }
 
         @Transactional
-        public synchronized BookingDto syncBookTicket(BookTicketInputDto bookTicketInput,
+        public synchronized PaymentDto syncBookTicket(BookTicketInputDto bookTicketInput,
                                                       BookingEntities entitiesToSave)
                 throws Exception{
 
@@ -92,7 +156,21 @@ public class BookingService {
             BookingEntity dbData = bookingRepository.save(entitiesToSave.getBookingEntity());
             entitiesToSave.getSeatsEntityList().forEach(seatsEntity -> seatsEntity.setBooking(dbData));
             seatsRepository.saveAll(entitiesToSave.getSeatsEntityList());
-            return BookingAdapter.toDto(dbData);
+            PaymentDto paymentDto = paymentService.createPayment(PaymentDto.builder()
+                    .amount(dbData.getAmount())
+                    .gateway(paymentGateway)
+                    .status(PaymentStatus.NOT_STARTED)
+                    .booking(BookingAdapter.toDto(dbData))
+                    .build());
+
+            long curTimeInMs = new Date().getTime();
+            Date bookingExpiryTime = new Date(curTimeInMs + (paymentTimeoutInterval * ONE_MINUTE_IN_MILLIS));
+            BookingExpiryEntity bookingExpiryEntity = BookingExpiryEntity.builder()
+                    .expirytime(bookingExpiryTime)
+                    .booking(dbData)
+                    .build();
+
+            return paymentDto;
         }
 
         public BookingDto getBooking(Long bookingId) throws Exception{
