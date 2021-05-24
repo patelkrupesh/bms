@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TheatreRepository extends CrudRepository<TheaterEntity, Integer> {
+public interface TheatreRepository extends CrudRepository<TheaterEntity, Long> {
 
     @Query("SELECT u FROM TheaterEntity u WHERE u.name=:name")
     Iterable<TheaterEntity> findTheaterEntitiesByName(@Param("name") String u);

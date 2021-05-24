@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserEntity, Integer> {
+public interface UserRepository extends CrudRepository<UserEntity, String> {
 
     @Query("SELECT u FROM UserEntity u WHERE u.username=:username")
     UserEntity findUserByUsername(@Param("username") String u);

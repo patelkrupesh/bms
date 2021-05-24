@@ -20,5 +20,4 @@ public class TheatreDto {
     private String name;
     private String address;
     private String city;
-//    private List<Long> screenDtosId;
 }

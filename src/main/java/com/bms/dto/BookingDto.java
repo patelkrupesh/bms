@@ -25,8 +25,6 @@ public class BookingDto {
     private Date bookingtime;
     private String allottedSeats;
     private double amount;
-//    private List<Long> seatsId;
-//    private List<Long> paymentDtosId;
     private String ticketDownloadlink;
     private ShowDto showDto;
     private UserDto userDto;

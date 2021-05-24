@@ -12,11 +12,10 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-//    @Autowired
+    //    @Autowired
     private UserRepository userRepository;
 
-    public boolean userSignUp(UserDto userDto) throws Exception{
-        boolean result = false;
+    public UserDto userSignUp(UserDto userDto) throws Exception{
 
         UserEntity dbData = userRepository.findUserByUsername(userDto.getUsername());
         if (dbData != null && dbData.getUsername() == userDto.getUsername()) {
@@ -26,11 +25,11 @@ public class UserService {
         UserEntity userEntity = UserAdapter.toEntity(userDto);
         userEntity = userRepository.save(userEntity);
 
-        return true;
+        return UserAdapter.toDto(userEntity);
     }
 
-    public boolean editSignUp(UserDto userDto) throws Exception {
-        boolean result = false;
+    public UserDto editSignUp(UserDto userDto) throws Exception {
+
         UserEntity dbData = userRepository.findUserByUsername(userDto.getUsername());
         if (dbData == null || dbData.getUsername() == null) {
             throw new Exception("User not found " + userDto.getName());
@@ -39,11 +38,11 @@ public class UserService {
         UserEntity userEntity = UserAdapter.toEntity(userDto);
         userEntity = userRepository.save(userEntity);
 
-        return false;
+        return UserAdapter.toDto(userEntity);
     }
 
     public UserDto login(String username, String password) throws Exception {
-        boolean result = false;
+
         UserEntity userEntity = userRepository.findUserByCredentials(username, password);
 
         if (userEntity == null) {

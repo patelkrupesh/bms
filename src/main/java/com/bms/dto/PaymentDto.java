@@ -22,6 +22,5 @@ public class PaymentDto {
     private Integer name;
     private PaymentStatus status;
     private String gateway;
-//    private Long userDtoId;
     private BookingDto bookingDto;
 }

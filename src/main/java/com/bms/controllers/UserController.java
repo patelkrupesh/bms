@@ -17,23 +17,29 @@ public class UserController{
     @PostMapping("signUp")
     public ResponseEntity<Boolean> userSignUp(@RequestBody UserDto userDto) {
         boolean result = false;
+        UserDto savedDto = null;
         try{
-            result = userService.userSignUp(userDto);
+            savedDto = userService.userSignUp(userDto);
         }catch (Exception e) {
             System.out.println("Got exception while adding user : " + e.getMessage());
+            return ResponseEntity.badRequest().body(false);
+        }
+        if(savedDto != null){
+            result = true;
         }
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("editUser")
-    public ResponseEntity<Boolean> editSignUp(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> editSignUp(@RequestBody UserDto userDto) {
         boolean result = false;
+        UserDto savedDto = null;
         try{
-            result = userService.editSignUp(userDto);
+            savedDto = userService.editSignUp(userDto);
         }catch (Exception e) {
             System.out.println("Got exception while editing user : " + e.getMessage());
         }
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(savedDto);
     }
 
     @GetMapping("login")

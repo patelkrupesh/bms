@@ -7,5 +7,5 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ScreenRepository extends CrudRepository<ScreenEntity, Integer>{
+public interface ScreenRepository extends CrudRepository<ScreenEntity, Long>{
 }

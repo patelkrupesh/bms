@@ -22,15 +22,16 @@ public class ShowEntity {
 	@Column(name="show_id")
 	private long id;
 
-	@Column(name = "release_date", columnDefinition = "DATE", nullable = false)
-	private LocalDate releaseDate;
+	@Column(name = "date", columnDefinition = "DATE", nullable = false)
+	private LocalDate date;
 
 	@Column(name = "show_time", nullable = false)
 	private int time;
 
-//	@OneToMany(mappedBy = "bookings")
-//	@JsonIgnore
-//	private List<BookingEntity> bookingEntities;
+	@ManyToOne
+	@JoinColumn(name = "movie_id")
+	@JsonIgnore
+	private MovieEntity movieEntity;
 
 //	@OneToMany(mappedBy = "seats")
 //	@JsonIgnore

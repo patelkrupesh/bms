@@ -1,9 +1,6 @@
 package com.bms.dto;
 
-import com.bms.model.BookingEntity;
-import com.bms.model.ScreenEntity;
-import com.bms.model.SeatsEntity;
-import com.bms.model.TheaterEntity;
+import com.bms.model.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -22,9 +19,8 @@ import java.util.List;
 @ToString
 public class ShowDto {
     private long id;
-    private LocalDate releaseDate;
+    private LocalDate date;
     private int time;
-//    private List<Long> bookingDtosId;
-//    private List<Long> seatsDtosId;
     private ScreenDto screenDto;
+    private MovieDto movieDto;
 }

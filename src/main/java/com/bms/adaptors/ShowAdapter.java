@@ -1,6 +1,7 @@
 package com.bms.adaptors;
 
 import com.bms.dto.ShowDto;
+import com.bms.model.MovieEntity;
 import com.bms.model.ShowEntity;
 import lombok.experimental.UtilityClass;
 
@@ -11,9 +12,10 @@ public class ShowAdapter {
 
 		return ShowEntity.builder()
 				.id(showDto.getId())
-				.releaseDate(showDto.getReleaseDate())
+				.date(showDto.getDate())
 				.time(showDto.getTime())
 				.screenEntity(ScreenAdapter.toEntity(showDto.getScreenDto()))
+				.movieEntity(MovieAdapter.toEntity(showDto.getMovieDto()))
 				.build();
 
 	}
@@ -22,9 +24,10 @@ public class ShowAdapter {
 
 		return ShowDto.builder()
 				.id(showEntity.getId())
-				.releaseDate(showEntity.getReleaseDate())
+				.date(showEntity.getDate())
 				.time(showEntity.getTime())
 				.screenDto(ScreenAdapter.toDto(showEntity.getScreenEntity()))
+				.movieDto(MovieAdapter.toDto(showEntity.getMovieEntity()))
 				.build();
 	}
 
