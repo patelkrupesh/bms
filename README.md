@@ -83,7 +83,7 @@ Table name : theatres, screens, shows, seats
       
       •	UI : login as theatre -> add screen
       
-      •	API: addScreen (details)
+      •	API: addScreen (details) (POST: /api/screens/add)
       
       •	DB: CREATE_SCREEN(seatsObj), INSERT_THEATRE(theatreId, screenId)
       
@@ -91,7 +91,7 @@ Table name : theatres, screens, shows, seats
        
        •	UI : login as theatre -> select screen ->edit screen
        
-       •	API: editScreen (theatreId, screenId, seatsObject)
+       •	API: editScreen (theatreId, screenId, seatsObject) (POST: /api/screens/edit)
        
        •	DB: UPDATE_SCREEN(screenId, seatsObj)
        
@@ -101,13 +101,15 @@ Table name : theatres, screens, shows, seats
 
       •	UI : login as theatre -> add show ->enter movie, ticket price etc.
        
-      •	API: addShow (ShowInput)
+      •	API: addShow (showDto) (POST: /api/shows/add)
 
       •	DB: CREATE_SHOW(details), UPDATE_SEATS(details)
 
 11.	Edit show:
        
        • edit basic show details
+       
+       • API: editShow (showDto) (GET: /api/shows/edit)
        
 12.	Find movie show:
        
@@ -172,38 +174,46 @@ Table name : BOOKING
        
        •	API: reserveTicket(screenId, time, listOfSeats, paymentType , customerId)
        
-       o	Mark the seats as – BOOKING_IN_PROGRESS
+       o	Mark the seats as – BOOKING_IN_PROGRESS (or booked = true)
        
-       o	Create entry in payment table and initiate payment
+       o	Create entry in payment table, update seat details in db and  initiate payment
+        // this will be done as one transaction
        
        o	If booking is successful , update seat as booked and return the ticket to user
+            update booking table and seat entities.
        
-       o	If payment is failed, update seat as empty and return failure to user
+       o	If payment is failed, update seat as empty, update booking entity and return failure to user
        
        o	If payment is timed out (& other cases like tab closed, internet issues etc):
        
-       •	Set a timer of 10 minutes while creating payment
+        // There are 2 ways we can handle this.
+       // 1 - we can craete a linked hashmap of ongoing (not expired) bookings and update it on timeout
+            this will craete issue if the cluster goes down due to any issue or high load.
+            So I will go with the below approach with db.
+       
+        // 2 - In all cases while creating payment we will crate a entry in bookingexpiry table with predefined 10 mins expiry time
+            I have created a cron job - which will start a batch process every one minute
+            It will get all the expired payments , check their status again with the payment gateway
+            and handle them as below.
        
        •	At the end of timer check the payment status again.
        
-       •	If payment is successful, change seat from BOOKING_IN_PROGRESS to BOOKED
+       •	If payment is successful, change seat from BOOKING_IN_PROGRESS to BOOKED, 
+            mark booking as SUCCESSFULL. update db (booking and seat) (in single transaction)
        
-       •	If payment failed , then change to EMPTY
+       •	If payment failed , then change seat to EMPTY (or is_booked = false)
+            update the seat and booking (mark booking as FAILED) (in single transaction)
        
-•	If payment payment is still in progress, then create a recall request for the paymentId with gateway, mark payment as recalled/returned and make seat EMPTY.
-       •	DB: transaction 1 :
-       UPDATE_SCREEN(screenId, time, seats),
-       CREATE_BOOKING(screenId, time, seats, paymentId, custId, status), CREATE_PAYMENT(id, gateway, amount, customerId, bookingId, status, …),
-
-transaction 2:
-UPDATE_PAYMENT(id, status, …)
-UPDATE_BOOKING(screenId, time, seats, paymentId, ticket, custId, status)
-UPDATE_SCREEN(screenId, time, seats)
-
-
+        •   If payment payment is still in progress, then register a recall request for the paymentId with gateway, mark payment as recalled/returned 
+            update booking as failed and make seat as EMPTY.(in single transaction)
+       
 note : we can setup a queue (eg rabitmq) which will be fec by the status changes for SMS and email, upon booking successful we can send the ticket by email/whatsapp.
 
-19.	Cancel booking : I have not implemented cancel booking as most of the theatres and booking websites do not support it, but as per design we can support it. In that case we will need to 1- create return payment and 2 – update screen and mark seat as EMPTY.
+19.	Cancel booking : I have not implemented cancel booking as most of the theatres and booking websites do not support it, 
+       but as per design we can support it. 
+       In that case we will need to 
+       1- create return payment and 
+       2 – update screen and mark seat as EMPTY.
 
 ----------
 
