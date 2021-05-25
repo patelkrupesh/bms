@@ -98,12 +98,12 @@ Table name : theatres, screens, shows, seats
 -------------
 
 10.	Add show :
-
-      •	UI : login as theatre -> add show ->enter movie, ticket price etc.
+ 
+        •	UI : login as theatre -> add show ->enter movie, ticket price etc.
        
-      •	API: addShow (showDto) (POST: /api/shows/add)
+        •	API: addShow (showDto) (POST: /api/shows/add)
 
-      •	DB: CREATE_SHOW(details), UPDATE_SEATS(details)
+        •	DB: CREATE_SHOW(details), UPDATE_SEATS(details)
 
 11.	Edit show:
        
@@ -186,12 +186,12 @@ Table name : BOOKING
        
        o	If payment is timed out (& other cases like tab closed, internet issues etc):
        
-        // There are 2 ways we can handle this.
+       // There are 2 ways we can handle this.
        // 1 - we can craete a linked hashmap of ongoing (not expired) bookings and update it on timeout
             this will craete issue if the cluster goes down due to any issue or high load.
             So I will go with the below approach with db.
        
-        // 2 - In all cases while creating payment we will crate a entry in bookingexpiry table with predefined 10 mins expiry time
+       // 2 - In all cases while creating payment we will crate a entry in bookingexpiry table with predefined 10 mins expiry time
             I have created a cron job - which will start a batch process every one minute
             It will get all the expired payments , check their status again with the payment gateway
             and handle them as below.
