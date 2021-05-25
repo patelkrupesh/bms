@@ -113,3 +113,13 @@ CREATE TABLE `payments` (
                               PRIMARY KEY (`id`),
                               FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`),
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `bookingexpiry`;
+
+CREATE TABLE `bookingexpiry` (
+                            `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                            `expiry_time` date NOT NULL,
+                            `booking_id` bigint(20) DEFAULT NULL,
+                            PRIMARY KEY (`id`),
+                            FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
