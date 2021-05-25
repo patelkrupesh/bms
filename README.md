@@ -37,9 +37,9 @@ We can also open the apis to search the tickets and theatres and only booking ap
 
 ---------
 
-Theatre/Screen/Show/Seat controller : 
+Theatre/Screen/Show/Seat controllers : 
 
-Table name : theatres, screens, shows, seats
+Table names : theatres, screens, shows, seats
 
 4.	Theatre signup
       
@@ -68,6 +68,8 @@ Table name : theatres, screens, shows, seats
 7.	Get theatres in a city
       
       •	API: getTheatresByCity (GET : /api/theatre/theatreByCity)
+      
+      •	DB : READ_THEATRE(details)
       
 8.	Get theatres showing particular movie
       
@@ -115,23 +117,17 @@ Table name : theatres, screens, shows, seats
        
        •    UI : login as user -> search movie ->select movie, select seats.
        
-       •	API: getAllShows (ShowInput)
+       •	API: getAllShows (ShowInput) (GET: /api/shows/allshows)
        
 13.	Get seats:
        
-       •	UI: after above step (api10) -> select time -> select number of person
+       •	UI: after above step (api12) -> select time -> select number of person
        
-       •	API:  getAllSeats(screenId, movieTime)
+       •	API:  getAllSeats(screenId, movieTime)(GET: /api/seats/getallseats)
        
        •	DB: READ_SEATS(screenId, movieTime)
        
-14.	Assign movie to screen (Add show)
-       
-       •	UI: login as admin -> select theatre -> select screen , select movie (get list of movies – api18), time and add price
-       
-       •	API: addMovietoScreen(screenId, movieId, time, price)
-       
-       •	DB: INSERT_MOVIE_TO_SCREEN(screenId, movieId, time, price)
+14.	Assign movie to screen (Add show) - as per api 10
 
 -------
 
@@ -142,6 +138,7 @@ Table name : MOVIE
        •	UI : Login as admin -> Add new movie -> Add cast, pgoto, description etc details
        
        •	API: addNewMovie(movieDetails) //add movieType = NEW to details
+       (POST : /api/movies/add")
        
        •	DB: CREATE_MOVIE(movieDetails)
        
@@ -149,7 +146,7 @@ Table name : MOVIE
        
        •	UI : Login as admin -> Select movie -> Edit movie details (any detail except rating is editable)
        
-       •	API: editMovie(movieDetails)
+       •	API: editMovie(movieDetails)(POST : /api/movies/edit")
        
        •	DB: UPDATE_MOVIE(movieDetails)
        
@@ -159,10 +156,13 @@ Table name : MOVIE
        Or assign movie to screen flow
        
        •	API: getAllNewMovies(type) gets all movies with movie type (default value = new)
+       (GET : /api/movies/allMovies")
        
        •	DB: READ_MOVIES(movieType)
        
        Note : we can write a cron job which will update all movies from new to old every Thursday night/ or after 2 weeks based on settings. Currently I am fetching all the movies.  (API: getAllMovies)
+
+        For now I am fetching all the movies.        
 
 ------------------
 
@@ -233,3 +233,4 @@ Table name : PAYMENT
 21.	Update payment // internal fn
        •    updatePayment
        •	UPDATE_PAYMENT(id, status)
+       
