@@ -1,25 +1,38 @@
 User Controller : Table name : users
-1.	Create user (types of user : CUSTOMER, ADMIN, BOXOFFICE)(POST : /user/signUp)
+1.	Create user (types of user : CUSTOMER, ADMIN, BOXOFFICE)
+      
       •	UI : Sign up page -> enter user details.
-      •	API : userSignUp(userdetails)
+      
+      •	API : userSignUp(userdetails)(POST : /api/user/signUp)
+      
       •	DB : CREATE_USER(userdetails)
 2.	Login
+      
       •	UI : Login page
-      •	API : loginUser(id, password) :
-      o	encrypt password.
-      o	Do db call to get encrypted password from db and match
-      o	If match is successful, create a auth-token using : userid, user type, token expiry time  ideally we will only keep the login apis open and for all other apis, user need to enter this auth token which they receive from login api’s response. (won’t do in this project)
+      
+      •	API : loginUser(username, password) (GET : /api/user/login)
+      
+      //	ideally we will encrypt password.
+      
+      //	db call will get encrypted password from db and match
+      
+      //	If match is successful, create a auth-token using : userid, user type, token expiry time  ideally we will only keep the login apis open and for all other apis, user need to enter this auth token which they receive from login api’s response. (won’t do in this project)
 
 We can also open the apis to search the tickets and theatres and only booking api requires user auth token.
-•	DB : READ_PASSWORD(userid)
 3.	Edit user
+      
       •	UI: login -> Goto edit profile page
-      •	API: editUser(userDetails)
+      
+      •	API: editUser(userDetails)(POST : /api/user/edit)
+      
       •	DB : UPDATE_USER(userdetails)
 
 4. Get all booking
+   
    •    UI: login -> Goto profile page -> bookings
-   •	API: getAllBookingsData(userDetails)
+   
+   •	API: getAllBookingsData()(GET : /api/user/allBookings)
+   
    •	DB : READ_BOOKING(userdetails)
 
 ---------
@@ -38,7 +51,8 @@ Table name : theatres, screens, shows, seats
       •	UI: login -> Goto edit theatre basic page
       •	API: editUser(details)
       •	DB : UPDATE_THEATRE(details)
-7.	Get theatres in a city // will only implement the get theatre + movie for now
+7.	Get theatres in a city
+      •	API: getTheatresByCity
 8.	Get theatres showing particular movie
       •	UI : Login as normal user -> enter city name -> select movie from list ->  call api to get all theatres in the city.
       •	API : getMovieScreens(city, movie)
