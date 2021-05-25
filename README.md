@@ -204,7 +204,7 @@ Table name : BOOKING
        •	If payment failed , then change seat to EMPTY (or is_booked = false)
             update the seat and booking (mark booking as FAILED) (in single transaction)
        
-        •   If payment payment is still in progress, then register a recall request for the paymentId with gateway, mark payment as recalled/returned 
+       •   If payment payment is still in progress, then register a recall request for the paymentId with gateway, mark payment as recalled/returned 
             update booking as failed and make seat as EMPTY.(in single transaction)
        
 note : we can setup a queue (eg rabitmq) which will be fec by the status changes for SMS and email, upon booking successful we can send the ticket by email/whatsapp.
