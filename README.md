@@ -168,31 +168,35 @@ Table name : MOVIE
 
 Table name : BOOKING
 
-18.	Reserve a ticket (create booking)
+18.	Reserve a ticket (create booking) (POST : /api/bookings/bookTicket)
        
        •	UI: select screen, time and seats that you want to book -> confirm and goto payment
        
-       •	API: reserveTicket(screenId, time, listOfSeats, paymentType , customerId)
+       •	API: reserveTicket(showId, time, listOfSeats, amount , customerId)
+
        
-       o	Mark the seats as – BOOKING_IN_PROGRESS (or booked = true)
+       o	Mark the seats as – BOOKING_IN_PROGRESS (or booked = true) so that it shows unavailable for other users.
        
        o	Create entry in payment table, update seat details in db and  initiate payment
-        // this will be done as one transaction
+        // this 3 will be done as one transaction to avoid multiple person booking same ticket.
        
-       o	If booking is successful , update seat as booked and return the ticket to user
+       o	i) If booking is successful , update seat as booked and return the ticket to user
             update booking table and seat entities.
        
-       o	If payment is failed, update seat as empty, update booking entity and return failure to user
+       o	ii) If payment is failed, update seat as empty, update booking entity and return failure to user
        
-       o	If payment is timed out (& other cases like tab closed, internet issues etc):
+       o	iii) If payment is timed out (& other cases like tab closed, internet issues etc):
        
        // There are 2 ways we can handle this.
-       // 1 - we can craete a linked hashmap of ongoing (not expired) bookings and update it on timeout
-            this will craete issue if the cluster goes down due to any issue or high load.
-            So I will go with the below approach with db.
+       // 1 - we can craete a linked hashmap of on-going (not expired) bookings and update it on timeout
+            this will create issue if the cluster goes down due to any issue or high load.
+            or you want to work on multi node system, where other free nodes should be able to handle expired bookings.
+            So I will go with the below approach 2
        
-       // 2 - In all cases while creating payment we will crate a entry in bookingexpiry table with predefined 10 mins expiry time
-            I have created a cron job - which will start a batch process every one minute
+       // 2 - In all cases, while creating payment, we will crate a entry in bookingexpiry table with predefined 10 mins expiry time
+            If payment fails/passes, (above cases 1 and ii ) we will remove the entry from this table. 
+            
+            for iii) case I have created a cron job - which will start a batch process every one minute
             It will get all the expired payments , check their status again with the payment gateway
             and handle them as below.
        
@@ -211,9 +215,12 @@ note : we can setup a queue (eg rabitmq) which will be fec by the status changes
 
 19.	Cancel booking : I have not implemented cancel booking as most of the theatres and booking websites do not support it, 
        but as per design we can support it. 
-       In that case we will need to 
-       1- create return payment and 
-       2 – update screen and mark seat as EMPTY.
+       
+       In that case we will need to
+       
+       1 - create return payment and 
+       
+       2 – update booking and mark seat as EMPTY.
 
 ----------
 
@@ -221,6 +228,8 @@ note : we can setup a queue (eg rabitmq) which will be fec by the status changes
 Table name : PAYMENT
 
 20.	Create payment // internal fn – have not exposed as api for this project
+       •    createPayment
        •	DB : CREATE_PAYMENT (id, gateway, amount, customerId, bookingId, status)
 21.	Update payment // internal fn
+       •    updatePayment
        •	UPDATE_PAYMENT(id, status)
