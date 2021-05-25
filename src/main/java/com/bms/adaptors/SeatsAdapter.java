@@ -20,7 +20,6 @@ public class SeatsAdapter {
 				.booked(seatsDto.isBooked())
 				.show(ShowAdapter.toEntity(seatsDto.getShow()))
 				.booking(BookingAdapter.toEntity(seatsDto.getBooking()))
-//				.show(ShowAdapter.toEntity(seatsDto.getShow()))
 				.build();
 
 	}
@@ -35,7 +34,6 @@ public class SeatsAdapter {
 				.booked(seatsEntity.isBooked())
 				.show(ShowAdapter.toDto(seatsEntity.getShow()))
 				.booking(BookingAdapter.toDto(seatsEntity.getBooking()))
-//				.show(ShowAdapter.toDto(seatsEntity.getShow()))
 				.build();
 	}
 

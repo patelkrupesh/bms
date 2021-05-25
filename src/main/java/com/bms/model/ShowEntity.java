@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
@@ -32,10 +31,6 @@ public class ShowEntity {
 	@JoinColumn(name = "movie_id")
 	@JsonIgnore
 	private MovieEntity movie;
-
-//	@OneToMany(mappedBy = "seats")
-//	@JsonIgnore
-//	private List<SeatsEntity> seats;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "screen_id")

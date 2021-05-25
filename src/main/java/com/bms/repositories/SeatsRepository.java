@@ -1,6 +1,5 @@
 package com.bms.repositories;
 
-import com.bms.model.MovieEntity;
 import com.bms.model.SeatsEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

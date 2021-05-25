@@ -1,18 +1,10 @@
 package com.bms.services;
 
 import com.bms.adaptors.PaymentAdapter;
-import com.bms.adaptors.ShowAdapter;
 import com.bms.dto.PaymentDto;
-import com.bms.dto.ShowDto;
 import com.bms.enums.PaymentStatus;
-import com.bms.model.MovieEntity;
 import com.bms.model.PaymentEntity;
-import com.bms.model.ScreenEntity;
-import com.bms.model.ShowEntity;
-import com.bms.repositories.MovieRepository;
 import com.bms.repositories.PaymentRepository;
-import com.bms.repositories.ScreenRepository;
-import com.bms.repositories.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +13,7 @@ import java.util.Optional;
 @Service
 public class PaymentService {
 
-//    @Autowired
+    @Autowired
     private PaymentRepository paymentRepository;
 
     public PaymentDto createPayment(PaymentDto paymentDto) throws Exception {
@@ -40,5 +32,9 @@ public class PaymentService {
             throw new Exception("Unable to update payment id : " + paymentDto.getId());
         }
         return PaymentAdapter.toDto(dbData);
+    }
+
+    public PaymentEntity getPaymentEntityFromBookingId(Long bookingId){
+        return paymentRepository.findByBookingId(bookingId);
     }
 }

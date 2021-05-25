@@ -1,11 +1,8 @@
 package com.bms.services;
 
-import com.bms.adaptors.ScreenAdapter;
 import com.bms.adaptors.SeatsAdapter;
 import com.bms.adaptors.ShowAdapter;
 import com.bms.adaptors.ShowUtil;
-import com.bms.dto.ScreenDto;
-import com.bms.dto.SeatInputDto;
 import com.bms.dto.ShowDto;
 import com.bms.dto.ShowInputDto;
 import com.bms.model.MovieEntity;
@@ -17,15 +14,11 @@ import com.bms.repositories.ScreenRepository;
 import com.bms.repositories.SeatsRepository;
 import com.bms.repositories.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,13 +26,13 @@ import java.util.Optional;
 @Service
 public class ShowService {
 
-//    @Autowired
+    @Autowired
     private ShowRepository showRepository;
-//    @Autowired
+    @Autowired
     private SeatsRepository seatsRepository;
-//    @Autowired
+    @Autowired
     private ScreenRepository screenRepository;
-//    @Autowired
+    @Autowired
     private MovieRepository movieRepository;
 
     @Transactional

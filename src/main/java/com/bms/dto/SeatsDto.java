@@ -24,5 +24,4 @@ public class SeatsDto {
     private boolean booked;
     private ShowDto show;
     private BookingDto booking;
-//    private ShowDto show;
 }

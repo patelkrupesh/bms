@@ -30,15 +30,6 @@ public class BmsApplication {
 				.apis(RequestHandlerSelectors.basePackage("com.bms")).build();
 	}
 
-	@Bean(name = "threadPoolTaskExecutor")
-	public TaskExecutor threadPoolTaskExecutor() {
-		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(20);
-		executor.setMaxPoolSize(2000);
-		executor.setWaitForTasksToCompleteOnShutdown(true);
-		return executor;
-	}
-
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {

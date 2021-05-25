@@ -4,8 +4,8 @@ com/bms/services/PaymentService.java
  com.bms.services.PaymentService
 com/bms/controllers/ScreenController.java
  com.bms.controllers.ScreenController
-com/bms/services/ScreenService.java
- com.bms.services.ScreenService
+com/bms/controllers/UserController.java
+ com.bms.controllers.UserController
 com/example/springboot/HelloController.java
  com.example.springboot.HelloController
 com/bms/dto/PaymentDto.java
@@ -21,10 +21,10 @@ com/bms/repositories/MovieRepository.java
 com/bms/model/UserEntity.java
  com.bms.model.UserEntity
  com.bms.model.UserEntity$UserEntityBuilder
-com/bms/services/SeatService.java
- com.bms.services.SeatService
-com/bms/enums/UserType.java
- com.bms.enums.UserType
+com/bms/adaptors/UserAdapter.java
+ com.bms.adaptors.UserAdapter
+com/bms/repositories/BookingRepository.java
+ com.bms.repositories.BookingRepository
 com/bms/repositories/ScreenRepository.java
  com.bms.repositories.ScreenRepository
 com/bms/repositories/PaymentRepository.java
@@ -45,11 +45,11 @@ com/bms/model/ScreenEntity.java
 com/bms/model/TheaterEntity.java
  com.bms.model.TheaterEntity
  com.bms.model.TheaterEntity$TheaterEntityBuilder
-com/bms/dto/SeatsDto.java
- com.bms.dto.SeatsDto
- com.bms.dto.SeatsDto$SeatsDtoBuilder
-com/bms/adaptors/SeatsAdapter.java
- com.bms.adaptors.SeatsAdapter
+com/bms/services/TheatreService.java
+ com.bms.services.TheatreService
+com/bms/dto/ScreenDto.java
+ com.bms.dto.ScreenDto
+ com.bms.dto.ScreenDto$ScreenDtoBuilder
 com/bms/controllers/TheatreController.java
  com.bms.controllers.TheatreController
 com/bms/adaptors/ShowUtil.java
@@ -75,10 +75,14 @@ com/example/springboot/Application.java
 com/bms/dto/TheatreDto.java
  com.bms.dto.TheatreDto
  com.bms.dto.TheatreDto$TheatreDtoBuilder
+com/bms/enums/BookingStatus.java
+ com.bms.enums.BookingStatus
 com/bms/services/MovieService.java
  com.bms.services.MovieService
 com/bms/controllers/MovieController.java
  com.bms.controllers.MovieController
+com/bms/repositories/BookingExpiryRepository.java
+ com.bms.repositories.BookingExpiryRepository
 com/bms/adaptors/PaymentAdapter.java
  com.bms.adaptors.PaymentAdapter
 com/bms/repositories/UserRepository.java
@@ -88,8 +92,8 @@ com/bms/enums/PaymentStatus.java
 com/bms/model/BookingEntity.java
  com.bms.model.BookingEntity
  com.bms.model.BookingEntity$BookingEntityBuilder
-com/bms/adaptors/TheatreAdapter.java
- com.bms.adaptors.TheatreAdapter
+com/bms/services/UserService.java
+ com.bms.services.UserService
 com/bms/config/DateConfig.java
  com.bms.config.DateConfig
  com.bms.config.DateConfig$Java8LocalDateStdDeserializer
@@ -114,33 +118,41 @@ com/bms/controllers/ShowController.java
 com/bms/dto/ShowDto.java
  com.bms.dto.ShowDto
  com.bms.dto.ShowDto$ShowDtoBuilder
-com/bms/services/ShowService.java
- com.bms.services.ShowService
+com/bms/adaptors/TheatreAdapter.java
+ com.bms.adaptors.TheatreAdapter
 com/bms/dto/BookTicketInputDto.java
  com.bms.dto.BookTicketInputDto
  com.bms.dto.BookTicketInputDto$BookTicketInputDtoBuilder
+com/bms/adaptors/BookingExpiryAdapter.java
+ com.bms.adaptors.BookingExpiryAdapter
 com/bms/adaptors/ScreenAdapter.java
  com.bms.adaptors.ScreenAdapter
+com/bms/model/BookingExpiryEntity.java
+ com.bms.model.BookingExpiryEntity
+ com.bms.model.BookingExpiryEntity$BookingExpiryEntityBuilder
 com/bms/dto/UserDto.java
  com.bms.dto.UserDto
  com.bms.dto.UserDto$UserDtoBuilder
-com/bms/adaptors/UserAdapter.java
- com.bms.adaptors.UserAdapter
-com/bms/dto/ScreenDto.java
- com.bms.dto.ScreenDto
- com.bms.dto.ScreenDto$ScreenDtoBuilder
-com/bms/model/PaymentEntity.java
- com.bms.model.PaymentEntity
- com.bms.model.PaymentEntity$PaymentEntityBuilder
+com/bms/dto/BookingExpiryDto.java
+ com.bms.dto.BookingExpiryDto
+ com.bms.dto.BookingExpiryDto$BookingExpiryDtoBuilder
 com/bms/repositories/TheatreRepository.java
  com.bms.repositories.TheatreRepository
 com/bms/services/BookingService.java
  com.bms.services.BookingService
-com/bms/services/UserService.java
- com.bms.services.UserService
-com/bms/repositories/BookingRepository.java
- com.bms.repositories.BookingRepository
-com/bms/services/TheatreService.java
- com.bms.services.TheatreService
-com/bms/controllers/UserController.java
- com.bms.controllers.UserController
+com/bms/model/PaymentEntity.java
+ com.bms.model.PaymentEntity
+ com.bms.model.PaymentEntity$PaymentEntityBuilder
+com/bms/services/ScreenService.java
+ com.bms.services.ScreenService
+com/bms/dto/SeatsDto.java
+ com.bms.dto.SeatsDto
+ com.bms.dto.SeatsDto$SeatsDtoBuilder
+com/bms/enums/UserType.java
+ com.bms.enums.UserType
+com/bms/services/SeatService.java
+ com.bms.services.SeatService
+com/bms/adaptors/SeatsAdapter.java
+ com.bms.adaptors.SeatsAdapter
+com/bms/services/ShowService.java
+ com.bms.services.ShowService

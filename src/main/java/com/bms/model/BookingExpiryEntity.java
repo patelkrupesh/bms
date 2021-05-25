@@ -1,6 +1,5 @@
 package com.bms.model;
 
-import com.bms.enums.BookingStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 

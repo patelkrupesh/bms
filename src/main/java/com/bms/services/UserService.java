@@ -18,9 +18,9 @@ import java.util.List;
 @Service
 public class UserService {
 
-//    @Autowired
+    @Autowired
     private UserRepository userRepository;
-//    @Autowired
+    @Autowired
     private BookingRepository bookingRepository;
 
     public UserDto userSignUp(UserDto userDto) throws Exception{

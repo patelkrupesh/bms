@@ -1,10 +1,8 @@
 package com.bms.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -32,11 +30,4 @@ public class UserEntity {
 	@Column(name = "type", nullable = false)
 	private String type;
 
-//	@OneToMany(mappedBy = "bookings")
-//	@JsonIgnore
-//	private List<BookingEntity> bookingEntities;
-//
-//	@OneToMany(mappedBy = "payments")
-//	@JsonIgnore
-//	private List<PaymentEntity> paymentEntities;
 }

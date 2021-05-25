@@ -1,12 +1,8 @@
 package com.bms.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
 @Entity
@@ -36,10 +32,5 @@ public class TheaterEntity {
 
 	@Column(name = "city", nullable = false)
 	private String city;
-
-//	@OneToMany(mappedBy = "screens" , cascade = CascadeType.ALL)
-//	@JsonIgnore
-//	@Builder.Default
-//	private List<ScreenEntity> screens = new ArrayList<>();
 
 }

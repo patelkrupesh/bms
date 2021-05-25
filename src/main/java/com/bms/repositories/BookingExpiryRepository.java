@@ -1,6 +1,5 @@
 package com.bms.repositories;
 
-import com.bms.model.BookingEntity;
 import com.bms.model.BookingExpiryEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

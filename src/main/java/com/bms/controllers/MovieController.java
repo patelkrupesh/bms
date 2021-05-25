@@ -1,9 +1,7 @@
 package com.bms.controllers;
 
 import com.bms.dto.MovieDto;
-import com.bms.dto.UserDto;
 import com.bms.services.MovieService;
-import com.bms.services.UserService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

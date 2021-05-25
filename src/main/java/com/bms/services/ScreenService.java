@@ -1,25 +1,18 @@
 package com.bms.services;
 
 import com.bms.adaptors.ScreenAdapter;
-import com.bms.adaptors.TheatreAdapter;
 import com.bms.dto.ScreenDto;
-import com.bms.dto.TheatreDto;
-import com.bms.exceptions.DuplicateRecordException;
 import com.bms.model.ScreenEntity;
-import com.bms.model.TheaterEntity;
 import com.bms.repositories.ScreenRepository;
-import com.bms.repositories.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ScreenService {
 
-//    @Autowired
+    @Autowired
     private ScreenRepository screenRepository;
 
     public ScreenDto addScreen(ScreenDto screenDto) throws Exception {

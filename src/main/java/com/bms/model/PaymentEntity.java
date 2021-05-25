@@ -1,13 +1,10 @@
 package com.bms.model;
 
-import com.bms.enums.Language;
-import com.bms.enums.MovieGenre;
 import com.bms.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter

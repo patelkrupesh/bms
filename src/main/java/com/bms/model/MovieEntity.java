@@ -2,12 +2,10 @@ package com.bms.model;
 
 import com.bms.enums.Language;
 import com.bms.enums.MovieGenre;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 @Getter
 @Setter
